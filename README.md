@@ -1,2 +1,4 @@
 # MAIS202-Winter-2024
-Stock Fetching Tool
+Stock Prices Fetching Tool
+
+By Samaksh Khandewal and Marcus DelaCruz
