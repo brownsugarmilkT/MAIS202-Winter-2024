@@ -6,6 +6,7 @@ from tensorflow.keras.layers import Dense, GRU, Dropout
 from tensorflow.keras.optimizers import Adam
 from tensorflow.random import set_seed
 from sklearn.preprocessing import MinMaxScaler
+import os
 
 app = Flask(__name__)
 
@@ -29,7 +30,7 @@ model = create_model()
 
 # Define route for home page
 @app.route('/', methods=['GET', 'POST'])
-def home():
+def predict():
     if request.method == 'GET':
         return render_template('form.html')
     elif request.method == 'POST':
@@ -41,12 +42,14 @@ def home():
         scaler = MinMaxScaler(feature_range=(0, 1))
         training_set = scaler.fit_transform(dataset['Close'].values.reshape(-1, 1))
         window_size = 60
-        X_test, y_test = split_sequence(training_set, window_size)
-        X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
+        X_train, y_train = split_sequence(training_set, window_size)
+        X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
+        # Train the model
+        model.fit(X_train, y_train, epochs=50, batch_size=64, validation_split=0.1)
         # Make predictions using your model
-        predicted_stock_price = model.predict(X_test)
+        predicted_stock_price = model.predict(X_train)
         predicted_stock_price = scaler.inverse_transform(predicted_stock_price).flatten()
-        actual_stock_price = scaler.inverse_transform(y_test).flatten()
+        actual_stock_price = scaler.inverse_transform(y_train).flatten()
         # Generate plots
         train_test_plot_path = generate_train_test_plot(actual_stock_price, predicted_stock_price)
         # Return path to the saved image as JSON response
@@ -73,6 +76,8 @@ def generate_train_test_plot(actual_prices, predicted_prices):
     plt.xlabel('Time')
     plt.ylabel('Stock Price')
     plt.legend()
+    if not os.path.exists('static'):
+        os.makedirs('static')
     plot_path = 'static/train_test_plot.png'
     plt.savefig(plot_path)
     plt.close()
