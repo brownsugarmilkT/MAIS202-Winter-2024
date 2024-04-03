@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Prediction Results</title>
+    <style>
+        /* Add any custom CSS styles here */
+        .plot-container {
+            width: 80%;
+            margin: auto;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stock Prediction Results</h1>
+    <h2>Stock Symbol: {{ stock_symbol }}</h2>
+    <div class="plot-container">
+        <h3>Actual vs. Predicted Stock Prices</h3>
+        <img src="{{ train_test_plot_path }}" alt="Actual vs. Predicted Stock Prices">
+    </div>
+</body>
+</html>

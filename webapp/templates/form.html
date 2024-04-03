@@ -1,0 +1,17 @@
+<!-- form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Prediction Form</title>
+</head>
+<body>
+    <h1>Stock Prediction</h1>
+    <form action="/predict" method="POST">
+        <label for="stock_symbol">Enter Stock Symbol:</label>
+        <input type="text" id="stock_symbol" name="stock_symbol" required>
+        <input type="submit" value="Predict">
+    </form>
+</body>
+</html>
