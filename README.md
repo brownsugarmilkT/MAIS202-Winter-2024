@@ -17,3 +17,6 @@ then finally run the webapp using
 ```
 python app.py
 ```
+
+## BONUS
+we have a python-jupyter notebook to better visualize the machine learning process and code that went into making this all possible! just download it from the repo and run on your favourite IDE!
